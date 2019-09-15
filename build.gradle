@@ -3,7 +3,7 @@ buildscript {
 		pactVersion = '3.6.13'
 		pactDirectory = "$buildDir/pacts"
 	}
-	
+
 	dependencies {
 		classpath("au.com.dius:pact-jvm-provider-gradle_2.12:${pactVersion}")
 	}
@@ -13,9 +13,8 @@ plugins {
 	id 'org.springframework.boot' version '2.1.8.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
+	id "au.com.dius.pact" version "${pactVersion}"
 }
-
-apply plugin: 'au.com.dius.pact'
 
 group = 'io.stene'
 version = '0.0.1-SNAPSHOT'
@@ -34,7 +33,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation "au.com.dius:pact-jvm-consumer-junit5_2.12:${pactVersion}"
-	
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
