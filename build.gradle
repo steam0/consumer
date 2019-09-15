@@ -3,6 +3,10 @@ buildscript {
 		pactVersion = '3.6.13'
 		pactDirectory = "$buildDir/pacts"
 	}
+	
+	dependencies {
+		classpath("au.com.dius:pact-jvm-provider-gradle_2.12:${pactVersion}")
+	}
 }
 
 plugins {
@@ -10,6 +14,8 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
 }
+
+apply plugin: 'au.com.dius.pact'
 
 group = 'io.stene'
 version = '0.0.1-SNAPSHOT'
