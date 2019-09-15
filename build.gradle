@@ -39,3 +39,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
 }
+
+test {
+	systemProperties['pact.rootDir'] = 'target/pacts'
+}
