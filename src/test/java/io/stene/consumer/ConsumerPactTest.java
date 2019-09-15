@@ -57,4 +57,36 @@ public class ConsumerPactTest {
 
         assertEquals(PactVerificationResult.Ok.INSTANCE, result);
     }
+
+    @Test
+    public void createPersonWithDNumber() throws JsonProcessingException {
+        Person person = Person.builder()
+                .name("John Appleseed")
+                .ssn("71039012345")
+                .build();
+
+        RequestResponsePact pact = ConsumerPactBuilder
+                .consumer("consumer").hasPactWith("national-registry")
+                .uponReceiving("Create new person with D number request")
+                    .path("/v1/person")
+                    .method("POST")
+                    .body(objectMapper.writeValueAsString(person))
+                .willRespondWith()
+                    .status(HttpStatus.CREATED.value())
+                    .body(new PactDslJsonBody()
+                            .stringValue("name", person.getName())
+                            .stringValue("ssn", person.getSsn())
+                            .integerType("id", 0)
+                    )
+                .toPact();
+
+        MockProviderConfig config = MockProviderConfig.createDefault();
+
+        PactVerificationResult result = runConsumerTest(pact, config, (mockServer, context) -> {
+            NationalRegistryClient nationalRegistryClient = new NationalRegistryClient(new NationalRegistryConfig(mockServer.getUrl()));
+            nationalRegistryClient.createPerson(person);
+        });
+
+        assertEquals(PactVerificationResult.Ok.INSTANCE, result);
+    }
 }
