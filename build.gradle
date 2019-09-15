@@ -1,3 +1,10 @@
+buildscript {
+	ext {
+		pactVersion = '3.6.13'
+		pactDirectory = "$buildDir/pacts"
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.1.8.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
@@ -20,6 +27,8 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation "au.com.dius:pact-jvm-consumer-junit5_2.12:${pactVersion}"
+	
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
