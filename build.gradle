@@ -1,7 +1,6 @@
 buildscript {
 	ext {
 		pactVersion = '3.6.13'
-		pactDirectory = "$buildDir/pacts"
 	}
 
 	dependencies {
@@ -42,4 +41,12 @@ dependencies {
 
 test {
 	systemProperties['pact.rootDir'] = 'target/pacts'
+}
+
+// Publish pact files
+pact {
+	publish {
+		pactDirectory = 'target/pacts'
+		pactBrokerUrl = 'http://localhost:3000'
+	}
 }
