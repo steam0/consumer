@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class NationalRegistryIntegrationTests {
+class NationalRegistryIntegrationTest {
 
 	@Autowired
 	private NationalRegistryClient nationalRegistryClient;
