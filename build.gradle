@@ -46,11 +46,3 @@ dependencies {
 test {
 	systemProperties['pact.rootDir'] = 'target/pacts'
 }
-
-// Publish pact files
-pact {
-	publish {
-		pactDirectory = 'target/pacts'
-		pactBrokerUrl = 'http://localhost:3000'
-	}
-}
