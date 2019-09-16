@@ -2,7 +2,6 @@ package io.stene.consumer;
 
 import io.stene.consumer.client.NationalRegistryClient;
 import io.stene.consumer.client.Person;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ class NationalRegistryIntegrationTest {
 	private NationalRegistryClient nationalRegistryClient;
 
 	@Test
-//	@Disabled
 	void createNewPerson() {
 		Person person = Person.builder().name("Harald Hårfagre").ssn("01039012345").build();
 
