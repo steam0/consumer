@@ -25,34 +25,33 @@ public class ConsumerPactTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-
     @Test
     public void createPerson() throws JsonProcessingException {
-        Person person = Person.builder()
-                .name("John Appleseed")
-                .ssn("11039012345")
-                .build();
+        // Create a Person object and give it a name and a social security number
+        Person person
 
+
+        // Create a "Create person" pact using the ConsumerPactBuilder
+        // A pact should at least have:
+        // A consumer - consumer
+        // A provider to have a pact with - hasPactWith
+        // A description - uponReceiving
+            // A path - path
+            // A http method for the request - method
+            // A body - body (Hint: use the objectMapper to write the person object as a String)
+        // A response behaviour - willRespondWith
+            // A response status - status
+            // A body - body
+                // A JSON Body - new PactDslJsonBody
+        // A toPact statement - toPact
         RequestResponsePact pact = ConsumerPactBuilder
-                .consumer("consumer").hasPactWith("national-registry")
-                .uponReceiving("Create new person request")
-                    .path("/v1/person")
-                    .method("POST")
-                    .body(objectMapper.writeValueAsString(person))
-                .willRespondWith()
-                    .status(HttpStatus.CREATED.value())
-                    .body(new PactDslJsonBody()
-                            .stringValue("name", person.getName())
-                            .stringValue("ssn", person.getSsn())
-                            .integerType("id", 0)
-                    )
-                .toPact();
+
 
         MockProviderConfig config = MockProviderConfig.createDefault();
 
         PactVerificationResult result = runConsumerTest(pact, config, (mockServer, context) -> {
-            NationalRegistryClient nationalRegistryClient = new NationalRegistryClient(new NationalRegistryConfig(mockServer.getUrl()));
-            nationalRegistryClient.createPerson(person);
+            // Create a mock client by using the url from the mock server
+            // Call the endpoint that fit the pact you want to create
         });
 
         assertEquals(PactVerificationResult.Ok.INSTANCE, result);

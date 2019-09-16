@@ -20,7 +20,7 @@ class NationalRegistryIntegrationTest {
 	private NationalRegistryClient nationalRegistryClient;
 
 	@Test
-//	@Disabled
+	@Disabled
 	void createNewPerson() {
 		Person person = Person.builder().name("Harald Hårfagre").ssn("01039012345").build();
 
