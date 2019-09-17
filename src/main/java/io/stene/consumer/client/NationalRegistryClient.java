@@ -33,4 +33,12 @@ public class NationalRegistryClient {
         log.info("Fetched Person(id={}, name={}, ssn={})", response.getId(), response.getName(), response.getSsn());
         return response;
     }
+
+    public Person getPersonById(String id) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = nationalRegistryConfig.getUrl()+"/v1/person?id="+id;
+        Person response = restTemplate.getForObject(url, Person.class);
+        log.info("Fetched Person(id={}, name={}, ssn={})", response.getId(), response.getName(), response.getSsn());
+        return response;
+    }
 }

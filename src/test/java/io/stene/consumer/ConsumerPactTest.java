@@ -118,4 +118,33 @@ public class ConsumerPactTest {
 
         assertEquals(PactVerificationResult.Ok.INSTANCE, result);
     }
+
+    @Test
+    public void getPersonById() {
+        Integer id = 100;
+
+        RequestResponsePact pact = ConsumerPactBuilder
+                .consumer("consumer").hasPactWith("national-registry")
+                .given("A person exist")
+                .uponReceiving("Get person by id")
+                    .path("/v1/person")
+                    .method("GET")
+                    .queryParameterFromProviderState("id", "${id}:integer", id.toString())
+                .willRespondWith()
+                    .status(HttpStatus.OK.value())
+                    .body(new PactDslJsonBody()
+                           .stringType("ssn")
+                            .valueFromProviderState("id", "${id}", id)
+                    )
+                .toPact();
+
+        MockProviderConfig config = MockProviderConfig.createDefault();
+
+        PactVerificationResult result = runConsumerTest(pact, config, (mockServer, context) -> {
+            NationalRegistryClient nationalRegistryClient = new NationalRegistryClient(new NationalRegistryConfig(mockServer.getUrl()));
+            nationalRegistryClient.getPersonById(id.toString());
+        });
+
+        assertEquals(PactVerificationResult.Ok.INSTANCE, result);
+    }
 }
